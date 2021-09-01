@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Projeto XML e Web Services</title>
+    </h:head>
+    <h:body>
+        <h1>Cadastro de Clientes</h1>
+        <h:form>
+            <h:panelGrid columns="2">
+                <h:outputLabel for="codigo" 
+                               value="Informe o código do cliente: " />
+                <h:inputText value="#{jSFCliente.codigo}" 
+                             converterMessage="Apenas números são aceitos no código!" 
+                             required="true" 
+                             requiredMessage="Código é obrigatório!"
+                             readonly="#{jSFCliente.editavel}" />
+            </h:panelGrid>
+
+            <h:panelGrid columns="2">
+                <h:outputLabel for="nome" 
+                               value="Informe o nome do cliente: " />
+                <h:inputText value="#{jSFCliente.nome}" 
+                             required="true" 
+                             requiredMessage="Nome é obrigatório!" />
+            </h:panelGrid>
+
+            <h:panelGrid columns="2">
+                <h:outputLabel for="cidade" 
+                               value="Informe a cidade do cliente: " />
+                <h:selectOneMenu value="#{jSFCliente.cidade}" >
+                    <f:selectItems value="#{jSFCliente.cidades}" />
+                </h:selectOneMenu>
+            </h:panelGrid>
+
+            <h:panelGrid columns="2">
+                <h:commandButton value="SALVAR" 
+                                 action="#{jSFCliente.salvar()}" />
+                <h:commandButton value="LIMPAR" 
+                                 action="#{jSFCliente.limpar()}" />
+                <h:outputText rendered="#{jSFCliente.exibirMensagem}" 
+                              style="color: red" 
+                              value="#{jSFCliente.mensagem}" />
+            </h:panelGrid>
+        </h:form>
+
+        <h3>Clientes Cadastrados:</h3>
+        <h:form>
+            <h:panelGrid columns="3">
+                <h:outputText value="Código" />
+                <h:outputText value="Nome" />
+                <h:outputText value="Cidade" />
+            </h:panelGrid>
+            <h:dataTable value="#{jSFCliente.allClientes}" var="cliente" >
+                <h:column>
+                    <h:outputText value="#{cliente.codigo}" />
+                </h:column>
+
+                <h:column>
+                    <h:outputText value="#{cliente.nome}" />
+                </h:column>
+
+                <h:column>
+                    <h:outputText value="#{cliente.cidade}" />
+                </h:column>
+                
+                <h:column>
+                    <h:commandButton value="EDITAR" action="#{jSFCliente.editar(cliente)}" />
+                </h:column>
+                
+                <h:column>
+                    <h:commandButton value="DELETAR" action="#{jSFCliente.deletar(cliente)}" />
+                </h:column>
+            </h:dataTable>
+            <h:commandButton value="DELETAR TODOS" 
+                             action="#{jSFCliente.deletarClientes()}" />
+        </h:form>
+    </h:body>
+</html>
+
